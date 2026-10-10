@@ -4,7 +4,7 @@ layout: default
 <section id="top" class="wrap hero" aria-labelledby="hero-title">
   <div>
     <p class="eyebrow">Personal blog · {{ 'now' | date: '%Y' }}</p>
-    <h1 id="hero-title">你好，我是<br>{{ site.title | split: '·' | first }}。</h1>
+    <h1 id="hero-title">你好，我是<br>{{ site.title | split: '·' | first | strip }}。</h1>
     <p class="hero-copy">我在这里记录前端与网页开发的学习过程：写过的 HTML/CSS、做过的小练习，还有那些查了很久才弄明白的知识点。</p>
     <div class="hero-actions">
       <a class="button primary" href="#writing">读读我的文章</a>
