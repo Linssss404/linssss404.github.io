@@ -5,34 +5,40 @@ layout: default
   <div>
     <p class="eyebrow">Personal blog · {{ 'now' | date: '%Y' }}</p>
     <h1 id="hero-title">你好，我是<br>{{ site.title | split: '·' | first }}。</h1>
-    <p class="hero-copy">我在这里记录正在学习的东西、做过的小项目，以及一些不想忘记的想法。</p>
+    <p class="hero-copy">我在这里记录前端与网页开发的学习过程：写过的 HTML/CSS、做过的小练习，还有那些查了很久才弄明白的知识点。</p>
     <div class="hero-actions">
       <a class="button primary" href="#writing">读读我的文章</a>
-      <a class="button secondary" href="mailto:hello@example.com">给我发邮件</a>
+      <a class="button secondary" href="https://github.com/Linssss404">看我的 GitHub</a>
+      <a class="button secondary" href="mailto:2609189688@qq.com">给我发邮件</a>
     </div>
   </div>
-  <div class="hero-card" aria-label="个人头像占位图"><div class="avatar">YN</div></div>
+  <div class="hero-card" aria-label="个人头像占位图"><div class="avatar">LS</div></div>
 </section>
 
 <section id="writing" class="wrap section" aria-labelledby="writing-title">
-  <div class="section-heading"><div><p class="eyebrow">Latest notes</p><h2 id="writing-title">最近写了什么</h2><div class="rule"></div></div><p>以后只需要在 `_posts` 文件夹中新增 Markdown 文件。</p></div>
-  <div class="article-grid">
+  <div class="section-heading"><div><p class="eyebrow">Latest notes</p><h2 id="writing-title">最近写了什么</h2><div class="rule"></div></div><p>以后只需要在 <code>_posts</code> 文件夹中新增 Markdown 文件。</p></div>
+  <div class="article-grid{% if site.posts.size &lt; 3 %} article-grid--few{% endif %}">
     {% for post in site.posts limit: 6 %}
     <article class="card">
       <div class="card-meta">{{ post.date | date: '%Y.%m.%d' }}{% if post.tags %} · {{ post.tags | first }}{% endif %}</div>
       <h3>{{ post.title }}</h3>
-      <p>{{ post.excerpt | strip_html | truncate: 100 }}</p>
+      <p>{{ post.excerpt | default: post.content | strip_html | truncate: 100 }}</p>
       <a class="card-link" href="{{ post.url | relative_url }}">阅读文章 →</a>
     </article>
     {% endfor %}
+    <article class="card card-quiet">
+      <div class="card-meta">NEXT</div>
+      <h3>下一篇正在写</h3>
+      <p>把新文章放进 <code>_posts/</code>，文件名写成 <code>YYYY-MM-DD-title.md</code>，它就会出现在这里。</p>
+    </article>
   </div>
 </section>
 
 <section id="projects" class="wrap section" aria-labelledby="projects-title">
-  <div class="section-heading"><div><p class="eyebrow">Selected work</p><h2 id="projects-title">做过的小项目</h2><div class="rule"></div></div><p>项目内容仍然直接写在这个页面里，适合首节先改文字和链接。</p></div>
+  <div class="section-heading"><div><p class="eyebrow">Selected work</p><h2 id="projects-title">做过的小项目</h2><div class="rule"></div></div><p>用纯 HTML 与 CSS 完成的静态页面练习，随时可以继续补充。</p></div>
   <div class="project-grid">
-    <article class="card"><div class="card-meta">PROJECT 01</div><h3>校园活动页面</h3><p>为一次活动制作的静态介绍页，练习了布局和信息层级。</p><a class="card-link" href="#">查看项目 →</a></article>
-    <article class="card"><div class="card-meta">PROJECT 02</div><h3>我的学习清单</h3><p>一个帮助自己整理课程、目标和阅读记录的小工具。</p><a class="card-link" href="#">查看项目 →</a></article>
-    <article class="card"><div class="card-meta">PROJECT 03</div><h3>正在进行中</h3><p>这里可以放一个还没完成、但值得继续记录的想法。</p><a class="card-link" href="#">了解更多 →</a></article>
+    <article class="card"><div class="card-meta">PROJECT 01</div><h3>这个个人博客</h3><p>基于 Jekyll 模板改造的静态博客：Markdown 写作，GitHub Actions 自动构建，部署在 GitHub Pages 上。</p><a class="card-link" href="https://github.com/Linssss404/linssss404.github.io">查看源码 →</a></article>
+    <article class="card"><div class="card-meta">PROJECT 02</div><h3>个人主页练习</h3><p>用手写 HTML 与 CSS 排版一个介绍页，练习语义化标签、信息层级和响应式布局。</p><a class="card-link" href="https://github.com/Linssss404">查看仓库列表 →</a></article>
+    <article class="card"><div class="card-meta">PROJECT 03</div><h3>CSS 布局笔记</h3><p>把 Flexbox 与 Grid 的常用写法整理成可复用的片段，边学边记，顺便当成速查表。</p><a class="card-link" href="{{ '/' | relative_url }}#writing">相关文章 →</a></article>
   </div>
 </section>

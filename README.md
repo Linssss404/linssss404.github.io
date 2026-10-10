@@ -1,83 +1,93 @@
-# Markdown 个人博客模板
+# Linssss 的个人博客
 
-这是一个不需要 Node.js、npm 或 React 的 Jekyll 静态博客模板。
+一个纯静态的 Jekyll 个人博客，部署在 GitHub Pages 上。**不需要** Node.js、npm、React、Vue 或任何构建工具：文章用 Markdown 写，由 GitHub Actions 上的 Jekyll 编译成 HTML。
 
-## 学生开箱步骤
+- 博客网址：https://linssss404.github.io/
+- 仓库：https://github.com/Linssss404/linssss404.github.io
 
-1. 打开模板仓库，点击 **Use this template → Create a new repository**。
-2. 填写自己决定的仓库名称和公开/私有可见性。
-3. 创建完成后，进入自己仓库的 **Settings → Pages**，把 Source 设为 **GitHub Actions**。
-4. 等待 `Build and deploy Jekyll site` workflow 完成，再打开 Pages URL。
-5. 修改 `_config.yml` 中的名字，编辑 `index.html` 的项目卡片，并在 `_posts/` 中写自己的 Markdown 文章。
+## 文件结构
 
-仓库创建和 Pages 设置也可以让 Agent 操作，但必须先把目标仓库 URL 明确告诉 Agent，并在推送前检查 `git diff`。
-
-注意：仓库里的 `index.html` 是 Jekyll 模板源码，不能靠双击本地文件看到最终页面；最终 HTML 会由 GitHub Actions 生成。学生不需要在电脑上安装 Ruby、Jekyll、Node.js 或 npm。
+```text
+_config.yml                 站点标题、描述、网址、作者信息
+index.html                  首页（Hero、文章列表、项目卡片）
+about.md                    关于页
+assets/style.css            全站样式（配色变量集中在 :root）
+_layouts/default.html       全站外框：导航与页脚
+_layouts/post.html          文章页布局
+_posts/YYYY-MM-DD-title.md  所有文章
+.github/workflows/pages.yml 自动构建并部署到 GitHub Pages
+```
 
 ## 写一篇新文章
 
-在 `_posts/` 中复制示例文章，文件名使用：
+在 `_posts/` 中新建文件，文件名必须是：
 
 ```text
 YYYY-MM-DD-title.md
 ```
 
-文章开头保留 Front Matter：
+开头保留 Front Matter：
 
 ```yaml
 ---
 layout: post
 title: 文章标题
-date: 2026-10-08
-excerpt: 一句话摘要
+date: 2026-10-10
+excerpt: 一句话摘要，会显示在首页卡片上
 tags:
-  - 学习
+  - 前端
 ---
 ```
 
-第二个 `---` 之后直接写 Markdown 正文：标题、段落、列表、链接、代码块都可以使用。
+第二个 `---` 之后直接写 Markdown 正文。标题、段落、列表、链接、引用、代码块都可以用。
+
+文章的网址由 `_config.yml` 里的 `permalink: /posts/:title/` 决定，例如 `_posts/2026-10-10-static-site-workflow.md` 会发布在 `/posts/static-site-workflow/`。
+
+## 修改个人信息与配色
+
+| 想改什么 | 改哪里 |
+| --- | --- |
+| 站点标题、描述、作者、邮箱 | `_config.yml` |
+| 首页自我介绍、按钮、项目卡片 | `index.html` |
+| 关于页内容 | `about.md` |
+| 页脚与导航里的链接 | `_layouts/default.html` |
+| 主色、辅助色、字体、圆角 | `assets/style.css` 顶部的 `:root` 变量 |
+
+配色只需要改 `:root` 里的几个变量，全站会自动跟着变：
+
+```css
+:root {
+  --accent: #4f5bd5;       /* 主色：分隔线、标签、链接 */
+  --accent-dark: #37409e;  /* 主色深版：小标题、hover */
+  --accent-2: #0f8f7d;     /* 辅助色：关于页竖线 */
+  --ink: #1b2130;          /* 正文 */
+  --muted: #667085;        /* 次要文字 */
+  --paper: #ffffff;        /* 卡片背景 */
+}
+```
 
 ## 发布流程
 
-1. 修改或新增 `_posts/*.md`。
-2. 修改首页内容时编辑 `index.html`。
-3. 修改关于页时编辑 `about.md`。
-4. 修改配色和排版时编辑 `assets/style.css`。
-5. 在浏览器中检查文件内容和链接。
-6. `git diff` 检查变更。
-7. `git add`、`git commit`、`git push`。
-8. GitHub Actions 自动运行 Jekyll，将 Markdown 编译成 HTML 并发布到 GitHub Pages。
-
-## 第一次启用 Pages
-
-把仓库推送到 GitHub 后，在仓库中打开：
-
 ```text
-Settings → Pages → Source → GitHub Actions
+本地改 Markdown / HTML / CSS
+        ↓
+git add . && git commit -m "说明"
+        ↓
+git push
+        ↓
+GitHub Actions 自动运行 Jekyll
+        ↓
+网站更新到 https://linssss404.github.io/
 ```
 
-之后每次推送到 `main`，workflow 都会重新生成网站。
+推送后到仓库的 **Actions** 标签页可以看到 `Build and deploy Jekyll site` 是否成功，约 1 分钟完成。
 
-## 需要学生理解的概念
+## 本地预览说明
 
-```text
-Markdown 文章
-      ↓
-Jekyll / GitHub Actions
-      ↓
-HTML 页面
-      ↓
-GitHub Pages URL
-```
+`index.html` 是 Jekyll 模板源码，直接双击打开看不到最终效果（文章列表需要构建时才能生成）。本地预览不是必须的 —— 推送到 GitHub 后由 Actions 完成构建即可。
 
-学生不需要在本地安装 Ruby、Jekyll、Node.js 或 npm。构建发生在 GitHub Actions 上。
+## 注意
 
-## Agent 提示词
-
-```text
-/goal 这是一个 Jekyll 静态博客项目。请先读取 README、_config.yml、index.html、_layouts 和 _posts。
-以后新增文章时，只在 _posts/ 中创建 YYYY-MM-DD-title.md，并使用现有 Front Matter 和 layout: post。
-不要引入 React、Vue、Node.js、npm、外部 CDN 或新的构建工具。
-修改前先列出文件和计划；修改后检查 Markdown Front Matter、文章链接、相对资源路径和 Git diff。
-我确认目标仓库后，才执行 git commit 和 git push。
-```
+- 仓库必须保持 **Public**，否则免费账号无法使用 GitHub Pages。
+- Pages 的 Source 需要设为 **GitHub Actions**（首次部署时 Actions 会自动开启）。
+- 本仓库不引入任何外部 CDN、前端框架或构建工具。

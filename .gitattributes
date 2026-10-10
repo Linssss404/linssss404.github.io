@@ -1,0 +1,11 @@
+# 统一换行符，避免 Windows 与 GitHub Actions 之间出现整文件 diff
+* text=auto eol=lf
+*.md text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary
